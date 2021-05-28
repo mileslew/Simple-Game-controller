@@ -1,0 +1,94 @@
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+#include <avr/power.h>
+#endif
+
+//define the digital pin that the LED strip is connected to
+#define PIN 4
+
+//the first parameter is the number of LEDs you have - change for your strip
+
+int R = 52;
+int G = 235;
+int B = 107;
+
+int button = 2;
+//int LEDStrip = 4;
+int pot = A0;
+int slider = A1;
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, PIN, NEO_GRB + NEO_KHZ800);
+void setup() {
+  Serial.begin(9600);
+  pinMode(button, INPUT);
+//  pinMode(LEDStrip, OUTPUT);
+  pinMode(pot, INPUT);
+  pinMode(slider, INPUT);
+  strip.begin(); //we always need to do this
+  strip.show(); // Initialize all pixels to 'off'
+}
+
+void loop() {
+int  potVal = analogRead(pot);
+int  sliderVal = 1023 - analogRead(slider);
+int  buttonVal = digitalRead(button);
+//  Serial.print("reading");
+  Serial.print(buttonVal);
+  Serial.print(",");
+  Serial.print( potVal);
+  Serial.print(",");
+  Serial.print( sliderVal);
+  Serial.println();
+
+  if (sliderVal <= 1){
+      strip.setPixelColor(0, 0, 0, 0);
+      strip.setPixelColor(1, 0, 0, 0);
+      strip.setPixelColor(2, 0, 0, 0);
+      strip.setPixelColor(3, 0, 0, 0);
+      strip.setPixelColor(4, 0, 0, 0);
+      strip.show();
+      
+   }
+  if (sliderVal > 1 and sliderVal <= 200){
+      strip.setPixelColor(0, R, G, B);
+      strip.setPixelColor(1, 0, 0, 0);
+      strip.setPixelColor(2, 0, 0, 0);
+      strip.setPixelColor(3, 0, 0, 0);
+      strip.setPixelColor(4, 0, 0, 0);
+      strip.show();
+      
+   }
+  
+  else if (sliderVal > 200 and sliderVal <= 400){
+      strip.setPixelColor(0, R, G, B);
+      strip.setPixelColor(1, R, G, B);
+      strip.setPixelColor(2, 0, 0, 0);
+      strip.setPixelColor(3, 0, 0, 0);
+      strip.setPixelColor(4, 0, 0, 0);
+      strip.show();
+   }
+   else if (sliderVal > 400 and sliderVal <= 600){
+      strip.setPixelColor(0, R, G, B);
+      strip.setPixelColor(1, R, G, B);
+      strip.setPixelColor(2, R, G, B);
+      strip.setPixelColor(3, 0, 0, 0);
+      strip.setPixelColor(4, 0, 0, 0);
+      strip.show();
+   }
+   else if (sliderVal > 600 and sliderVal <= 800){
+      strip.setPixelColor(0, R, G, B);
+      strip.setPixelColor(1, R, G, B);
+      strip.setPixelColor(2, R, G, B);
+      strip.setPixelColor(3, R, G, B);
+      strip.setPixelColor(4, 0, 0, 0);
+      strip.show();
+   }
+   else if (sliderVal > 800){
+      strip.setPixelColor(0, R, G, B);
+      strip.setPixelColor(1, R, G, B);
+      strip.setPixelColor(2, R, G, B);
+      strip.setPixelColor(3, R, G, B);
+      strip.setPixelColor(4, R, G, B);
+      strip.show();
+   }
+  
+}
